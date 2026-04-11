@@ -1,17 +1,12 @@
 <?php
 
-namespace app\Entities;
+namespace app\models\queries;
 
 use app\models\config\ConnectionDB;
+use app\models\entities\reservas;
 
-class Reserva {
-
-    private $db;
-
-    public function __construct() {
-        $this->db = new ConnectionDB();
-    }
-
+class reservaQuery
+{
     public function crear($id_cliente, $id_vehiculo, $inicio, $fin) {
 
         // Verificar estado del vehículo
