@@ -4,18 +4,23 @@ namespace app\models\entities;
 
 use app\models\config\ModelBase;
 
-class Reserva extends ModelBase
+class Reservas extends ModelBase
 {
-    protected $nombre_cliente = null;
-    protected $email_cliente = null;
-    protected $fecha_ini = null;
+    protected $id = 0;
+    protected $cliente_id  = null;
+    protected $vehiculo_id = null;
+    protected $fecha_inicio = null;
     protected $fecha_fin = null;
-
-    public function __construct($nombre_cliente, $email_cliente,$fecha_ini,$fecha_fin)
+    protected $estado = null;
+    public function __construct($id, $cliente_id, $vehiculo_id, $fecha_inicio, $fecha_fin, $estado)
     {
-        $this->nombre_cliente = $nombre_cliente;
-        $this->email_cliente= $email_cliente;
-        $this->fecha_ini = $fecha_ini;
+        $this->id = $id;
+        $this->cliente_id = $cliente_id;
+        $this->vehiculo_id = $vehiculo_id;
+        $this->fecha_inicio = $fecha_inicio;
         $this->fecha_fin = $fecha_fin;
+        $this->estado = $estado;
     }
-} 
+
+   
+}
