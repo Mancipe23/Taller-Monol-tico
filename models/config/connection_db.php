@@ -41,4 +41,9 @@ class ConnectionDB
     {
         $this->connDb->close();
     }
+
+    public function executePreparedStatement($sql) {
+        return $this->connDb->prepare($sql);
+    }
+
 }

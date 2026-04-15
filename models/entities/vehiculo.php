@@ -18,4 +18,8 @@ class Vehiculo extends ModelBase{
         $this->categoria = $categoria;
         $this->estado = $estado;
     } 
+
+    public function get($propiedad) {
+    return $this->$propiedad;
+    }
  }
