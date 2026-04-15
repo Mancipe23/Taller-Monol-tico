@@ -2,14 +2,28 @@
 
 namespace app\controllers;
 
-use app\models\queries\EstudiantesQuery;
-use app\models\entities\Estudiante;
+use app\models\queries\ReservasQuery;
+use app\models\entities\Reservas;
 
-class EstudiantesController
-{
-
-    public function getListaEstudiantes()
+class ReservasController{
+    public function gestionarPeticion()
     {
-        $lista_estudiantes = EstudiantesQuery::getAllEstudiantes();
-        return $lista_estudiantes;
+        if (isset($_POST["crear"])) {
+            $nuevaReserva = new Reservas(
+                0, 
+                $_POST["cliente"], 
+                $_POST["vehiculo"], 
+                $_POST["inicio"], 
+                $_POST["fin"], 
+                'activa'
+            );
+            $resultado = ReservasQuery::createReserva($nuevaReserva);
+
+            if ($resultado) {
+                return "Reserva creada exitosamente.";
+            } else {
+                return "Error al crear la reserva.";
+            }
+        }
     }
+}
