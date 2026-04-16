@@ -1,8 +1,5 @@
 <?php
-require_once '../models/config/connection_db.php';
-require_once '../models/config/model_base.php';
-require_once '../models/entities/cliente.php';
-require_once '../models/Queries/ClientesQuery.php';
+namespace app\controllers;
 
 use app\models\entities\Clientes;
 use app\models\Queries\ClientesQuery;
@@ -11,7 +8,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'crear') {
     
     // El orden de los parámetros debe coincidir con tu constructor en Cliente.php
     $nuevoCliente = new Clientes(
-        null, // ID autoincremental
+        null, 
         $_POST['nombre'],
         $_POST['telefono'],
         $_POST['email'],

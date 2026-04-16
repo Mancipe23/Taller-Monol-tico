@@ -1,10 +1,5 @@
 <?php
-
-// Requerimos los archivos necesarios. 
-require_once '../models/config/connection_db.php';
-require_once '../models/config/model_base.php';
-require_once '../models/entities/vehiculo.php';
-require_once '../models/Queries/VehiculosQuery.php';
+namespace app\controllers;
 
 use app\models\entities\Vehiculos;
 use app\models\Queries\VehiculosQuery;

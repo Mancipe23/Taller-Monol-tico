@@ -4,148 +4,115 @@ namespace app\models\queries;
 
 use app\models\config\ConnectionDB;
 use app\models\entities\reservas;
-
+use app\models\entities\Vehiculos; 
 class ReservasQuery
 {
-     static function getAllReservas()
+    static function getAllReservas()
     {
-        $sql = "select * from reservas";
+        $sql = "SELECT * FROM reservas";
         $connDb = new ConnectionDB();
         $result = $connDb->execute($sql);
         $list = [];
         while ($row = $result->fetch_assoc()) {
-            $reservas = new reservas($row['id'],$row['cliente_id'], $row['vehiculo_id'], $row['fecha_inicio'], $row['fecha_fin'], $row['estado']);
-            array_push($list, $reservas);
+            $reserva = new reservas($row['id'], $row['cliente_id'], $row['vehiculo_id'], $row['fecha_inicio'], $row['fecha_fin'], $row['estado']);
+            array_push($list, $reserva);
         }
         $connDb->close();
         return $list;
     }
         static function createReserva($entity)
     {
-        $sql = "insert into reservas (cliente_id,vehiculo_id,fecha_inicio,fecha_fin,estado) values (?,?,?,?,?)";
+        $sql = "INSERT INTO reservas (cliente_id, vehiculo_id, fecha_inicio, fecha_fin, estado) VALUES (?,?,?,?,?)";
         $connDb = new ConnectionDB();
         $result = $connDb->executeUpdateData($sql, [
             "type" => "iisss",
-            "datos" => [$entity->get('cliente_id'),$entity->get('vehiculo_id'),$entity->get('fecha_inicio'), $entity->get('fecha_fin'),$entity->get('estado'),]
+            "datos" => [
+                $entity->get('cliente_id'),
+                $entity->get('vehiculo_id'),
+                $entity->get('fecha_inicio'), 
+                $entity->get('fecha_fin'),
+                $entity->get('estado')
+            ]
         ]);
         $connDb->close();
         return $result;
     }
     static function actualizarEstado($id, $nuevoEstado)
-{
-    $sql = "UPDATE reservas SET estado = ? WHERE id = ?";
-    $connDb = new ConnectionDB();
-    $result = $connDb->executeUpdateData($sql, [
-        "type" => "si", 
-        "datos" => [
-            $nuevoEstado, 
-            $id
-        ]
-    ]);
-    $connDb->close();
-    return $result;
-}
-static function getHistorial($cliente_id = null, $vehiculos_id = null)
-{
-    $sql = "SELECT r.*, c.nombre AS cliente_nombre, v.marca, v.modelo 
-            FROM reservas r
-            JOIN cliente c ON r.cliente_id = c.id
-            JOIN vehiculos v ON r.vehiculos_id = v.id
-            WHERE 1=1";
-
-    if ($cliente_id != null) {
-        $sql .= " AND r.cliente_id = " . intval($cliente_id);
-    }
-
-    if ($vehiculos_id != null) {
-        $sql .= " AND r.vehiculo_id = " . intval($vehiculos_id);
-    }
-
-    $sql .= " ORDER BY r.fecha_inicio DESC";
-
-    $connDb = new ConnectionDB();
-    
-    $result = $connDb->execute($sql);
-
-    $list = [];
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $obj = new Reservas(
-                $row['id'], 
-                $row['cliente_id'], 
-                $row['vehiculos_id'], 
-                $row['fecha_inicio'], 
-                $row['fecha_fin'], 
-                $row['estado']
-            );
-            
-            $obj->set('cliente_nombre', $row['cliente_nombre']);
-            $obj->set('vehiculos_info', $row['marca'] . " " . $row['modelo']);
-            
-            $list[] = $obj;
-        }
-    }
-
-    $connDb->close();
-    return $list; 
-}
-static function tieneReservasActivasPorVehiculo($vehiculo_id)
     {
-        $sql    = "SELECT COUNT(*) as total FROM reservas 
-                WHERE vehiculo_id = ? AND estado = 'activa'";
+        $sql = "UPDATE reservas SET estado = ? WHERE id = ?";
         $connDb = new ConnectionDB();
-        $result = $connDb->executeQuery($sql, [
-            'type'  => 'i',
-            'datos' => [$vehiculo_id]
+        $result = $connDb->executeUpdateData($sql, [
+            "type" => "si", 
+            "datos" => [$nuevoEstado, $id]
         ]);
-        $row = $result->fetch_assoc();
         $connDb->close();
-        return $row['total'] > 0;
+        return $result;
     }
-
-    static function ReservasActivasClientes($clientes_id)
+     static function getHistorial($cliente_id = null, $vehiculo_id = null)
     {
-        $sql    = "SELECT COUNT(*) as total FROM reservas 
-                WHERE cliente_id = ? AND estado = 'activa'";
-        $connDb = new ConnectionDB();
-        $result = $connDb->executeQuery($sql, [
-            'type'  => 'i',
-            'datos' => [$clientes_id]
-        ]);
-        $row = $result->fetch_assoc();
-        $connDb->close();
-        return $row['total'] > 0;
-    }
-     static function ReservasActivasVehiculo($vehiculo_id)
-    {
-        $sql    = "SELECT COUNT(*) as total FROM reservas 
-                WHERE vehiculo_id = ? AND estado = 'activa'";
-        $connDb = new ConnectionDB();
-        $result = $connDb->executeQuery($sql, [
-            'type'  => 'i',
-            'datos' => [$vehiculo_id]
-        ]);
-        $row = $result->fetch_assoc();
-        $connDb->close();
-        return $row['total'] > 0;
-    }
-        static function getReservasActivas()
-    {
-        $sql = "SELECT r.*, c.nombre AS clientes_nombre,
-                    v.marca, v.modelo
+        $sql = "SELECT r.*, c.nombre AS cliente_nombre, v.marca, v.modelo 
                 FROM reservas r
                 JOIN clientes c ON r.cliente_id = c.id
-                JOIN vehiculo v ON r.vehiculo_id = v.id
+                JOIN vehiculos v ON r.vehiculo_id = v.id
+                WHERE 1=1";
+        if ($cliente_id != null) {
+            $sql .= " AND r.cliente_id = " . intval($cliente_id);
+        }
+        if ($vehiculo_id != null) {
+            $sql .= " AND r.vehiculo_id = " . intval($vehiculo_id);
+        }
+        $sql .= " ORDER BY r.fecha_inicio DESC";
+        $connDb = new ConnectionDB();
+        $result = $connDb->execute($sql);
+        $list = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $obj = new Reservas($row['id'], $row['cliente_id'], $row['vehiculo_id'], $row['fecha_inicio'], $row['fecha_fin'], $row['estado']);
+                $obj->set('cliente_nombre', $row['cliente_nombre']);
+                $obj->set('vehiculo_info', $row['marca'] . " " . $row['modelo']);
+                $list[] = $obj;
+            }
+        }
+        $connDb->close();
+        return $list; 
+    }
+    static function ReservasActivasClientes($cliente_id)
+    {
+        $sql = "SELECT COUNT(*) as total FROM reservas WHERE cliente_id = ? AND estado = 'activa'";
+        $connDb = new ConnectionDB();
+        $result = $connDb->executeQuery($sql, [
+            'type'  => 'i',
+            'datos' => [$cliente_id]
+        ]);
+        $row = $result->fetch_assoc();
+        $connDb->close();
+        return $row['total'] > 0;
+    }
+    static function ReservasActivasVehiculo($vehiculo_id)
+    {
+        $sql = "SELECT COUNT(*) as total FROM reservas WHERE vehiculo_id = ? AND estado = 'activa'";
+        $connDb = new ConnectionDB();
+        $result = $connDb->executeQuery($sql, [
+            'type'  => 'i',
+            'datos' => [$vehiculo_id]
+        ]);
+        $row = $result->fetch_assoc();
+        $connDb->close();
+        return $row['total'] > 0;
+    }
+    static function getReservasActivas()
+    {
+        $sql = "SELECT r.*, c.nombre AS cliente_nombre, v.marca, v.modelo
+                FROM reservas r
+                JOIN clientes c ON r.cliente_id = c.id
+                JOIN vehiculos v ON r.vehiculo_id = v.id
                 WHERE r.estado = 'activa'";
         $connDb = new ConnectionDB();
         $result = $connDb->execute($sql);
-        $list   = [];
+        $list = [];
         while ($row = $result->fetch_assoc()) {
-            $reserva = new Reservas(
-                $row['id'], $row['clientes_id'], $row['vehiculo_id'],
-                $row['fecha_inicio'], $row['fecha_fin'], $row['estado']
-            );
-            $reserva->set('clientes_nombre', $row['clientes_nombre']);
+            $reserva = new reservas($row['id'], $row['cliente_id'], $row['vehiculo_id'], $row['fecha_inicio'], $row['fecha_fin'], $row['estado']);
+            $reserva->set('cliente_nombre', $row['cliente_nombre']);
             $reserva->set('vehiculo_info',  $row['marca'] . ' ' . $row['modelo']);
             $list[] = $reserva;
         }
@@ -153,10 +120,24 @@ static function tieneReservasActivasPorVehiculo($vehiculo_id)
         return $list;
     }
     static function getDisponibles() {
-    $sql = "SELECT * FROM vehiculos WHERE estado = 'disponible'";
-
+        $sql = "SELECT * FROM vehiculos WHERE estado = 'disponible'";
+        $connDb = new ConnectionDB();
+        $result = $connDb->execute($sql);
+        $list = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $vehiculo = new Vehiculos(
+                    $row['id'], 
+                    $row['marca'], 
+                    $row['modelo'], 
+                    $row['anio'], 
+                    $row['categoria'],
+                    $row['estado']
+                );
+                $list[] = $vehiculo;
+            }
+        }
+        $connDb->close();
+        return $list;
+    }
 }
-
-}
- 
- ?>
