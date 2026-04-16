@@ -20,9 +20,6 @@ class ReservasController {
         $resultado = ReservasQuery::createReserva($reserva);
         return $resultado ? ["success" => "Reserva creada"] : ["error" => "Fallo creación"];
     }
-    public function disponibles() {
-        return ReservasQuery::getDisponibles();
-    }
     public function historial($cliente_id = null, $vehiculo_id = null) {
         return ReservasQuery::getHistorial($cliente_id, $vehiculo_id);
     }

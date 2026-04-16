@@ -3,8 +3,7 @@
 namespace app\models\queries;
 
 use app\models\config\ConnectionDB;
-use app\models\entities\reservas;
-use app\models\entities\Vehiculos; 
+use app\models\entities\reservas; 
 class ReservasQuery
 {
     static function getAllReservas()
@@ -119,25 +118,5 @@ class ReservasQuery
         $connDb->close();
         return $list;
     }
-    static function getDisponibles() {
-        $sql = "SELECT * FROM vehiculos WHERE estado = 'disponible'";
-        $connDb = new ConnectionDB();
-        $result = $connDb->execute($sql);
-        $list = [];
-        if ($result) {
-            while ($row = $result->fetch_assoc()) {
-                $vehiculo = new Vehiculos(
-                    $row['id'], 
-                    $row['marca'], 
-                    $row['modelo'], 
-                    $row['anio'], 
-                    $row['categoria'],
-                    $row['estado']
-                );
-                $list[] = $vehiculo;
-            }
-        }
-        $connDb->close();
-        return $list;
-    }
+
 }

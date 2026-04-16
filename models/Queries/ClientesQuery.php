@@ -40,7 +40,7 @@ class ClientesQuery {
             'type' => 'sss',
             'datos' => [
                 $clientes->get('nombre'),
-                $clientes->get('telefono'), 
+                $clientes->get('documento'), 
                 $clientes->get('email')
             ]
         ];

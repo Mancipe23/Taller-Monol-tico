@@ -8,7 +8,7 @@ class VehiculosQuery
 {
     static function getAllVehiculos()
     {
-        $sql = "SELECT * FROM Vehiculos";
+        $sql = "SELECT id, marca, modelo, anio, categoria, estado  FROM vehiculos";
         $connDb = new ConnectionDB();
         $result = $connDb->execute($sql);
         $list = [];
@@ -16,7 +16,7 @@ class VehiculosQuery
         while ($row = $result->fetch_assoc()) {
             $vehiculos = new Vehiculos(
                 $row['id'], 
-                $row['marca'], 
+                $row['marca'],  
                 $row['modelo'], 
                 $row['anio'], 
                 $row['categoria'], 
@@ -57,5 +57,37 @@ class VehiculosQuery
         ]);
     $connDb->close();
     return $result;
+    }
+        static function getDisponibles() {
+        $sql = "SELECT id, marca, modelo, anio, categoria, estado FROM vehiculos WHERE estado = 'disponible'";
+        $connDb = new ConnectionDB();
+        $result = $connDb->execute($sql);
+        $list = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $vehiculo = new Vehiculos(
+                    $row['id'], 
+                    $row['marca'], 
+                    $row['modelo'], 
+                    $row['anio'], 
+                    $row['categoria'],
+                    $row['estado']
+                );
+                $list[] = $vehiculo;
+            }
+        }
+        $connDb->close();
+        return $list;
+    }
+       static function actualizarEstado($id, $nuevoEstado)
+    {
+        $sql = "UPDATE vehiculos SET estado = ? WHERE id = ?";
+        $connDb = new ConnectionDB();
+        $result = $connDb->executeUpdateData($sql, [
+            "type" => "si", 
+            "datos" => [$nuevoEstado, $id]
+        ]);
+        $connDb->close();
+        return $result;
     }
 }
