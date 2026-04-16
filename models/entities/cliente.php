@@ -3,7 +3,7 @@
 namespace app\models\entities;
 use app\models\config\ModelBase;
 
-class Cliente extends ModelBase
+class Clientes extends ModelBase
 {
     protected $id = 0;
     protected $nombre = null;

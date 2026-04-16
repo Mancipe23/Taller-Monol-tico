@@ -6,7 +6,7 @@ require_once '../models/config/model_base.php';
 require_once '../models/entities/vehiculo.php';
 require_once '../models/Queries/VehiculosQuery.php';
 
-use app\models\entities\Vehiculo;
+use app\models\entities\Vehiculos;
 use app\models\Queries\VehiculosQuery;
 
 // Verificamos que la petición sea POST y que venga la variable 'accion'
@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion'])) {
         $categoria = $_POST['categoria'];
         $estado    = $_POST['estado']; 
 
-        $nuevoVehiculo = new Vehiculo(0, $marca, $modelo, $anio, $categoria, $estado);
-        $resultado = VehiculosQuery::insertarVehiculo($nuevoVehiculo);
+        $nuevoVehiculo = new Vehiculos(0, $marca, $modelo, $anio, $categoria, $estado);
+        $resultado = VehiculosQuery::insertarVehiculos($nuevoVehiculo);
 
         if ($resultado) {
             header("Location: ../index.php?mensaje=guardado");
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['accion'])) {
         $id = $_POST['id'];
 
         // Llamamos al método que creamos en VehiculosQuery
-        $resultado = VehiculosQuery::eliminarVehiculo($id);
+        $resultado = VehiculosQuery::eliminarVehiculos($id);
 
         if ($resultado) {
             header("Location: ../index.php?mensaje=eliminado");

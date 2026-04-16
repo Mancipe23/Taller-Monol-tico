@@ -3,7 +3,7 @@
 namespace app\models\Queries; 
 
 use app\models\config\ConnectionDB;
-use app\models\entities\Cliente; 
+use app\models\entities\Clientes; 
 
 class ClientesQuery {
 
@@ -12,19 +12,18 @@ class ClientesQuery {
         $connDb = new ConnectionDB();
         $sql = "SELECT id, nombre, documento, email FROM clientes";
         
-        // ¡Usamos tu propio método execute()! Hace el prepare, execute y get_result de una vez.
         $result = $connDb->execute($sql);
 
         if ($result) {
             while ($row = $result->fetch_assoc()) {
-                $cliente = new Cliente(
+                $clientes = new Clientes(
                     $row['id'],
                     $row['nombre'],
                     $row['documento'], 
                     $row['email'],
-                    "" // Licencia vacía
+                    "" 
                 );
-                array_push($list, $cliente);
+                array_push($list, $clientes);
             }
             $result->free(); 
         }
@@ -33,17 +32,16 @@ class ClientesQuery {
         return $list;
     }
 
-    public static function insertarCliente($cliente) {
+    public static function insertarClientes($clientes) {
         $connDb = new ConnectionDB();
         $sql = "INSERT INTO clientes (nombre, documento, email) VALUES (?, ?, ?)";
         
-        // Adaptamos los parámetros a la estructura que requiere tu método executeUpdateData
         $params = [
             'type' => 'sss',
             'datos' => [
-                $cliente->get('nombre'),
-                $cliente->get('telefono'), 
-                $cliente->get('email')
+                $clientes->get('nombre'),
+                $clientes->get('telefono'), 
+                $clientes->get('email')
             ]
         ];
 
@@ -52,7 +50,7 @@ class ClientesQuery {
         return $res;
     }
 
-    public static function eliminarCliente($id) {
+    public static function eliminarClientes($id) {
         $connDb = new ConnectionDB();
         $sql = "DELETE FROM clientes WHERE id = ?";
         

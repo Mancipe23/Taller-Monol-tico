@@ -36,14 +36,16 @@ class ConnectionDB
         $stm->bind_param($params['type'], ...$params['datos']);
         return $stm->execute();
     }
+        public function executeQuery($sql, $params)
+    {
+        $stm = $this->connDb->prepare($sql);
+        $stm->bind_param($params['type'], ...$params['datos']);
+        $stm->execute();
+        return $stm->get_result();
+    }
 
     public function close()
     {
         $this->connDb->close();
     }
-
-    public function executePreparedStatement($sql) {
-        return $this->connDb->prepare($sql);
-    }
-
 }

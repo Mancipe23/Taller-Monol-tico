@@ -2,7 +2,7 @@
 
 namespace app\models\entities;
 use app\models\config\ModelBase;
-class Vehiculo extends ModelBase{
+class Vehiculos extends ModelBase{
    
     protected $id = 0;
     protected $marca = null;

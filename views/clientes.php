@@ -1,9 +1,6 @@
 <?php
-// --- REPORTE DE ERRORES ---
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
-// --- IMPORTACIONES ---
 require_once '../models/config/connection_db.php';
 require_once '../models/config/model_base.php';
 require_once '../models/entities/cliente.php';
