@@ -22,12 +22,14 @@ $resultado = $controller->crear(
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datos guardado</title>
+    <title>Datos guardados</title>
 </head>
 <body> 
+    <?php
 echo $resultado['success'] ?? $resultado['error'];
 
 echo "<br><a href='lista_reservas.php'>Volver</a>";
-
+?>
+<a href='lista_reservas.php'>Volver</a>";
 </body> 
 </html>
