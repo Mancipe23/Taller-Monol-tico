@@ -18,4 +18,3 @@ class ClienteController {
         return ClientesQuery::eliminarClientes($id);
     }
 }
-}

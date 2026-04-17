@@ -12,8 +12,8 @@ class VehiculosQuery
         $connDb = new ConnectionDB();
         $result = $connDb->execute($sql);
         $list = [];
-        
-        while ($row = $result->fetch_assoc()) {
+         if ($result) {
+            while ($row = $result->fetch_assoc()) {
             $vehiculos = new Vehiculos(
                 $row['id'], 
                 $row['marca'],  
@@ -27,6 +27,7 @@ class VehiculosQuery
         $connDb->close();
         return $list;
     }
+}
 
     public static function insertarVehiculos($vehiculos) {
     $connDb = new ConnectionDB();
