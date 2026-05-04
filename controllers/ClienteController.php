@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 
-use app\models\entities\Clientes;
+use app\models\entities\cliente;
 use app\models\Queries\ClientesQuery;
 
 class ClienteController {
