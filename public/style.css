@@ -1,4 +1,6 @@
-/* 1. CONFIGURACIÓN Y TÍTULOS (Tu código nuevo) */
+/* =========================================
+   1. CONFIGURACIÓN, FUENTES Y TÍTULOS 
+   ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@400;600&display=swap');
 
 * {
@@ -10,6 +12,8 @@
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
 }
 
 h1 {
@@ -31,9 +35,12 @@ h1 {
     text-align: center;
     color: #666;
     margin-bottom: 40px;
+    font-size: 1.1rem;
 }
 
-/* 2. DISEÑO DE CUADRÍCULA Y TARJETAS (Mantén esto para no perder el diseño) */
+/* =========================================
+   2. DISEÑO DE CUADRÍCULA Y TARJETAS (Inicio) 
+   ========================================= */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -43,8 +50,8 @@ h1 {
     padding: 20px;
 }
 
-.animate-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.menu-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     border-radius: 15px;
     background: #ffffff;
     padding: 30px;
@@ -52,28 +59,217 @@ h1 {
     color: #333;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra iconos y texto dentro de la tarjeta */
+    align-items: center;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.animate-card:hover {
+.menu-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15);
     background: #f0f7ff;
 }
 
 .card-icon {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 15px;
 }
 
-/* 3. ANIMACIONES */
+.menu-card h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    color: #1a2a6c;
+}
+
+/* =========================================
+   3. ANIMACIONES 
+   ========================================= */
 .fade-in {
-    animation: fadeIn 1.5s ease-in;
+    animation: fadeIn 1s ease-in;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   4. CONTENEDORES Y BOTONES DE ACCIÓN 
+   ========================================= */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 0 5px;
+}
+
+.btn-back, .btn-add {
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.btn-back { background: #e0e0e0; color: #444; }
+.btn-add { 
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f); 
+    color: white; 
+    font-family: 'Montserrat', sans-serif; 
+    box-shadow: 0 4px 10px rgba(178, 31, 31, 0.2);
+}
+
+.btn-back:hover, .btn-add:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   5. FORMULARIOS DE FILTRO Y BÚSQUEDA 
+   ========================================= */
+.filter-form {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filter-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1a2a6c;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    padding-left: 5px;
+}
+
+.filter-input {
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+    background: #fcfcfc;
+}
+
+.filter-input:focus {
+    border-color: #1a2a6c;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.1);
+}
+
+.clear-filters {
+    font-size: 0.8rem;
+    color: #888;
+    text-decoration: none;
+    padding-bottom: 10px;
+    transition: color 0.2s;
+}
+
+.clear-filters:hover { color: #b21f1f; }
+
+/* =========================================
+   6. TABLAS RESPONSIVAS 
+   ========================================= */
+.table-responsive {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    overflow-x: auto;
+}
+
+.main-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.main-table th {
+    text-align: left;
+    padding: 18px 15px;
+    border-bottom: 2px solid #f4f7f6;
+    color: #1a2a6c;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.main-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f4f7f6;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    color: #555;
+}
+
+.main-table tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* =========================================
+   7. ETIQUETAS DE ESTADO Y BOTONES DE ACCIÓN 
+   ========================================= */
+.tag {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.available { background: #d4edda; color: #155724; }
+.rented { background: #fff3cd; color: #856404; }
+.cancelled { background: #f8d7da; color: #721c24; }
+
+.btn-icon {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.1rem;
+    line-height: 1;
+    margin-right: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-icon:hover { 
+    background: #e9ecef; 
+    transform: translateY(-2px); 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-icon.delete:hover { 
+    background: #ffe3e3; 
+    border-color: #ffb1b1; 
 }

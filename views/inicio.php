@@ -11,7 +11,7 @@
 
     <div class="container">
         <header>
-            <h1 class="fade-in">Gestor de Alquiler de Vehículos</h1>
+            <h1 class="fade-in">Summer Car EnterPrices</h1>
             <p class="subtitle fade-in">Selecciona una opción para continuar</p>
         </header>
 

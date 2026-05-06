@@ -4,59 +4,85 @@ require __DIR__ . '/../models/entities/Reservas.php';
 require __DIR__ . '/../models/config/connection_db.php';
 require __DIR__ . '/../models/queries/ReservasQuery.php';
 require __DIR__ . '/../controllers/ReservasController.php';
+
 use app\controllers\ReservasController;
+
 $controller = new ReservasController();
 $reservas = $controller->listarTodas();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Lista de Reservas</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentCar Pro - Lista de Reservas</title>
+    <link rel="stylesheet" href="../public/style.css">
 </head>
 <body>
-<h2>Lista de Reservas</h2>
-<a href="crear_reserva.php"> Nueva Reserva</a> |
-<a href="historialalquiler.php"> Ver Historial</a>
-<br><br>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Cliente ID</th>
-        <th>Vehículo ID</th>
-        <th>Inicio</th>
-        <th>Fin</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-    </tr>
-    <?php if ($reservas): ?>
-        <?php foreach ($reservas as $r): ?>
-            <tr>
-                <td><?= $r->get('id') ?></td>
-                <td><?= $r->get('cliente_id') ?></td>
-                <td><?= $r->get('vehiculo_id') ?></td>
-                <td><?= $r->get('fecha_inicio') ?></td>
-                <td><?= $r->get('fecha_fin') ?></td>
-                <td><?= $r->get('estado') ?></td>
-                <td>
-                    <?php if ($r->get('estado') == 'activa'): ?>
-                        <a href="completar_reserva.php?id=<?= $r->get('id') ?>&vehiculo_id=<?= $r->get('vehiculo_id') ?>">
-                        </a>
-                        <a href="cancelar_reserva.php?id=<?= $r->get('id') ?>&vehiculo_id=<?= $r->get('vehiculo_id') ?>">
-                        </a>
-                    <?php else: ?>
-                    <?php endif; ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="7">No hay reservas</td>
-        </tr>
-    <?php endif; ?>
-</table>
 
-<br>
-<a href="index.php"> Volver</a>
+<div class="container fade-in">
+    <h1>Lista de Reservas</h1>
+    <p class="subtitle">Administra los alquileres y estados actuales del sistema</p>
+
+    <div class="action-bar">
+        <a href="inicio.php" class="btn-back">← Volver</a>
+        <div>
+            <a href="historialalquiler.php" class="btn-back">📋 Ver Historial</a>
+            <a href="crear_reserva.php" class="btn-add">➕ Nueva Reserva</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente ID</th>
+                    <th>Vehículo ID</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($reservas): ?>
+                    <?php foreach ($reservas as $r): ?>
+                        <?php 
+                            $estado = strtolower($r->get('estado')); 
+                            // Mapeo de clases CSS según el estado
+                            $tagClass = ($estado == 'activa') ? 'available' : (($estado == 'cancelada') ? 'cancelled' : 'rented');
+                        ?>
+                        <tr>
+                            <td><strong>#<?= $r->get('id') ?></strong></td>
+                            <td>👤 <?= $r->get('cliente_id') ?></td>
+                            <td>🚗 <?= $r->get('vehiculo_id') ?></td>
+                            <td><?= $r->get('fecha_inicio') ?></td>
+                            <td><?= $r->get('fecha_fin') ?: '<span style="color: #999;">Pendiente</span>' ?></td>
+                            <td>
+                                <span class="tag <?= $tagClass ?>">
+                                    <?= ucfirst($estado) ?>
+                                </span>
+                            </td>
+                            <td>
+                                <?php if ($estado == 'activa'): ?>
+                                    <a href="completar_reserva.php?id=<?= $r->get('id') ?>&vehiculo_id=<?= $r->get('vehiculo_id') ?>" class="btn-icon" title="Completar">✅</a>
+                                    <a href="cancelar_reserva.php?id=<?= $r->get('id') ?>&vehiculo_id=<?= $r->get('vehiculo_id') ?>" class="btn-icon delete" title="Cancelar">❌</a>
+                                <?php else: ?>
+                                    <span style="color: #ccc; font-size: 0.8rem;">Sin acciones</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px;">No hay reservas registradas en el sistema.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>

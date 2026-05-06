@@ -17,53 +17,84 @@ $reservas = $controller->historial($cliente_id, $vehiculo_id);
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Historial de Reservas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentCar Pro - Historial</title>
+    <link rel="stylesheet" href="../public/style.css">
 </head>
 <body>
 
-<h2>Historial de Reservas</h2>
+<div class="container fade-in">
+    <h1>Historial de Reservas</h1>
+    <p class="subtitle">Consulta el registro histórico de alquileres realizados</p>
 
-<form method="GET">
-    Cliente ID: <input type="number" name="cliente_id">
-    Vehículo ID: <input type="number" name="vehiculo_id">
-    <button type="submit">Filtrar</button>
-</form>
+    <div class="action-bar">
+        <a href="inicio.php" class="btn-back">← Volver al Inicio</a>
+        <a href="lista_reservas.php" class="btn-back">📅 Ver Reservas Activas</a>
+    </div>
 
-<br>
+    <form method="GET" class="filter-form">
+        <div class="filter-group">
+            <label>ID Cliente</label>
+            <input type="number" name="cliente_id" class="filter-input" placeholder="Ej: 1" value="<?= htmlspecialchars($cliente_id ?? '') ?>">
+        </div>
+        <div class="filter-group">
+            <label>ID Vehículo</label>
+            <input type="number" name="vehiculo_id" class="filter-input" placeholder="Ej: 5" value="<?= htmlspecialchars($vehiculo_id ?? '') ?>">
+        </div>
+        <button type="submit" class="btn-add">🔍 Filtrar</button>
+        
+        <?php if ($cliente_id || $vehiculo_id): ?>
+            <a href="historialalquiler.php" class="clear-filters">Limpiar filtros</a>
+        <?php endif; ?>
+    </form>
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Cliente</th>
-        <th>Vehículo</th>
-        <th>Fecha Inicio</th>
-        <th>Fecha Fin</th>
-        <th>Estado</th>
-    </tr>
-
-    <?php if ($reservas): ?>
-        <?php foreach ($reservas as $r): ?>
-            <tr>
-                <td><?php echo $r->get('id'); ?></td>
-                <td><?php echo $r->get('cliente_nombre'); ?></td>
-                <td><?php echo $r->get('vehiculo_info'); ?></td>
-                <td><?php echo $r->get('fecha_inicio'); ?></td>
-                <td><?php echo $r->get('fecha_fin'); ?></td>
-                <td><?php echo $r->get('estado'); ?></td>
-            </tr>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="6">No hay reservas</td>
-        </tr>
-    <?php endif; ?>
-
-</table>
-
-<br>
-<a href=inicio.php">Volver</a>
+    <div class="table-responsive">
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Vehículo</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($reservas): ?>
+                    <?php foreach ($reservas as $r): ?>
+                        <?php 
+                            $estado = strtolower($r->get('estado')); 
+                            // Aplicación de las clases de colores según el estado
+                            $tagClass = ($estado == 'activa' || $estado == 'completada') ? 'available' : (($estado == 'cancelada') ? 'cancelled' : 'rented');
+                        ?>
+                        <tr>
+                            <td><strong>#<?= $r->get('id') ?></strong></td>
+                            <td>👤 <?= $r->get('cliente_nombre') ?: $r->get('cliente_id') ?></td>
+                            <td>🚗 <?= $r->get('vehiculo_info') ?: $r->get('vehiculo_id') ?></td>
+                            <td>📅 <?= $r->get('fecha_inicio') ?></td>
+                            <td>📅 <?= $r->get('fecha_fin') ?: '<span style="color: #999;">Abierta</span>' ?></td>
+                            <td>
+                                <span class="tag <?= $tagClass ?>">
+                                    <?= ucfirst($estado) ?>
+                                </span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #999;">
+                            No se encontraron registros que coincidan con la búsqueda.
+                        </td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>
