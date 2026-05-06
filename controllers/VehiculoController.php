@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 
-use app\models\entities\Vehiculo;
+use app\models\entities\Vehiculos;
 use app\models\Queries\VehiculosQuery;
 
 class VehiculoController {

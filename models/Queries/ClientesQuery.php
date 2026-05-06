@@ -3,7 +3,7 @@
 namespace app\models\Queries; 
 
 use app\models\config\ConnectionDB;
-use app\models\entities\Clientes; 
+use app\models\entities\cliente; 
 
 class ClientesQuery {
 
@@ -16,7 +16,7 @@ class ClientesQuery {
 
         if ($result) {
             while ($row = $result->fetch_assoc()) {
-                $clientes = new Clientes(
+                $clientes = new cliente(
                     $row['id'],
                     $row['nombre'],
                     $row['documento'], 
