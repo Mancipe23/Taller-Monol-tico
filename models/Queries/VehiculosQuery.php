@@ -34,7 +34,7 @@ class VehiculosQuery
     $sql = "INSERT INTO vehiculos (marca, modelo, anio, categoria, estado) 
             VALUES (?, ?, ?, ?, ?)";
              $params = [
-                 'type' => 'siiss',
+                 'type' => 'ssiss',
             'datos' => [
         $vehiculos->get('marca'), 
         $vehiculos->get('modelo'), 

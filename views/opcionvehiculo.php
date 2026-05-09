@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentCar Pro - Vehículos</title>
-    <!-- Importante: Esta ruta sube un nivel para encontrar la carpeta public -->
+    <title>AlquilerVehículos</title>
     <link rel="stylesheet" href="../public/style.css">
 </head>
 <body class="fade-in">
@@ -24,7 +23,7 @@
             <table class="main-table">
                 <thead>
                     <tr>
-                        <th>Placa</th>
+                        <th>Marca</th>
                         <th>Modelo</th>
                         <th>Categoría</th>
                         <th>Estado</th>

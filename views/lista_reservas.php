@@ -50,7 +50,6 @@ $reservas = $controller->listarTodas();
                     <?php foreach ($reservas as $r): ?>
                         <?php 
                             $estado = strtolower($r->get('estado')); 
-                            // Mapeo de clases CSS según el estado
                             $tagClass = ($estado == 'activa') ? 'available' : (($estado == 'cancelada') ? 'cancelled' : 'rented');
                         ?>
                         <tr>
@@ -58,7 +57,7 @@ $reservas = $controller->listarTodas();
                             <td>👤 <?= $r->get('cliente_id') ?></td>
                             <td>🚗 <?= $r->get('vehiculo_id') ?></td>
                             <td><?= $r->get('fecha_inicio') ?></td>
-                            <td><?= $r->get('fecha_fin') ?: '<span style="color: #999;">Pendiente</span>' ?></td>
+                            <td><?= $r->get('fecha_fin')?></td>
                             <td>
                                 <span class="tag <?= $tagClass ?>">
                                     <?= ucfirst($estado) ?>
@@ -69,14 +68,14 @@ $reservas = $controller->listarTodas();
                                     <a href="completar_reserva.php?id=<?= $r->get('id') ?>&vehiculo_id=<?= $r->get('vehiculo_id') ?>" class="btn-icon" title="Completar">✅</a>
                                     <a href="cancelar_reserva.php?id=<?= $r->get('id') ?>&vehiculo_id=<?= $r->get('vehiculo_id') ?>" class="btn-icon delete" title="Cancelar">❌</a>
                                 <?php else: ?>
-                                    <span style="color: #ccc; font-size: 0.8rem;">Sin acciones</span>
+                                    <span>Sin acciones</span>
                                 <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7" style="text-align: center; padding: 40px;">No hay reservas registradas en el sistema.</td>
+                        <td colspan="7">No hay reservas registradas en el sistema.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

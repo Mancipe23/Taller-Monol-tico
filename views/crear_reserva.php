@@ -16,38 +16,67 @@ $vehiculos = $vehiculoController->disponibles();
 $clientes = $clienteController->getLista();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Crear Reserva</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Reserva - Summer Car</title>
+    <link rel="stylesheet" href="../public/style.css">
 </head>
-<body>
-<h2>Crear Reserva</h2>
-<form action="guardar_reserva.php" method="POST">
-    <select name="cliente_id" required>
-        <?php foreach ($clientes as $c): ?>
-            <option value="<?= $c->get('id') ?>">
-                <?= $c->get('nombre') ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-    <br><br>
-    <select name="vehiculo_id" required>
-        <?php foreach ($vehiculos as $v): ?>
-            <option value="<?= $v->get('id') ?>">
-                <?= $v->get('marca') . " " . $v->get('modelo') ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-    <br><br>
-    <input type="date" name="fecha_inicio" required>
-    <br><br>
-    <input type="date" name="fecha_fin" required>
-    <br><br>
-    <button type="submit">Guardar Reserva</button>
-</form>
-<br>
-<a href="lista_reservas.php">Volver</a>
+<body class="fade-in">
+
+    <div class="container">
+        <header>
+            <h1>Crear Reserva</h1>
+        </header>
+
+        <div class="action-bar">
+            <a href="lista_reservas.php" class="btn-back">← Volver</a>
+        </div>
+
+        <div class="table-responsive">
+            <form action="../controllers/registrar_reserva_proceso.php" method="POST" class="filter-form">
+                
+                <div class="filter-group full-width">
+                    <label>Seleccionar Cliente</label>
+                    <select name="id_cliente" class="filter-input" required>
+                        <option value="">-- Seleccione un cliente registrado --</option>
+                        <?php foreach ($clientes as $c): ?>
+                            <option value="<?= $c->get('id') ?>">
+                                <?= $c->get('nombre') ?> (Licencia: <?= $c->get('licencia') ?>)
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="filter-group full-width">
+                    <label>Vehículo Disponible</label>
+                    <select name="id_vehiculo" class="filter-input" required>
+                        <option value="">-- Seleccione un auto --</option>
+                        <?php foreach ($vehiculos as $v): ?>
+                            <option value="<?= $v->get('id') ?>">
+                                <?= $v->get('marca') ?> <?= $v->get('modelo') ?> (<?= $v->get('categoria') ?>)
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Fecha Inicio</label>
+                    <input type="date" name="fecha_inicio" class="filter-input" required>
+                </div>
+
+                <div class="filter-group">
+                    <label>Fecha Fin</label>
+                    <input type="date" name="fecha_fin" class="filter-input" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-add">Confirmar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>

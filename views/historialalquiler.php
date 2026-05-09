@@ -6,16 +6,12 @@ require __DIR__ . '/../models/queries/ReservasQuery.php';
 require __DIR__ . '/../controllers/ReservasController.php';
 
 use app\controllers\ReservasController;
-
 $controller = new ReservasController();
-
-// filtros
 $cliente_id = $_GET['cliente_id'] ?? null;
 $vehiculo_id = $_GET['vehiculo_id'] ?? null;
 
 $reservas = $controller->historial($cliente_id, $vehiculo_id);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,7 +21,6 @@ $reservas = $controller->historial($cliente_id, $vehiculo_id);
     <link rel="stylesheet" href="../public/style.css">
 </head>
 <body>
-
 <div class="container fade-in">
     <h1>Historial de Reservas</h1>
     <p class="subtitle">Consulta el registro histórico de alquileres realizados</p>
@@ -34,7 +29,6 @@ $reservas = $controller->historial($cliente_id, $vehiculo_id);
         <a href="inicio.php" class="btn-back">← Volver al Inicio</a>
         <a href="lista_reservas.php" class="btn-back">📅 Ver Reservas Activas</a>
     </div>
-
     <form method="GET" class="filter-form">
         <div class="filter-group">
             <label>ID Cliente</label>
