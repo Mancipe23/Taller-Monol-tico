@@ -29,4 +29,8 @@ class VehiculoController {
     public function cambiarEstado($id, $estado) {
         return VehiculosQuery::actualizarEstado($id, $estado);
     }
+
+    public function editar($id, $placa, $marca, $modelo, $categoria, $precio_dia, $estado) {
+    return VehiculosQuery::actualizarVehiculo($id, $placa, $marca, $modelo, $categoria, $precio_dia, $estado);
+    }
 }
