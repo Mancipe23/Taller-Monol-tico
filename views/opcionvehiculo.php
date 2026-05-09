@@ -4,6 +4,7 @@ require_once __DIR__ . '/../models/config/connection_db.php';
 require_once __DIR__ . '/../models/entities/Vehiculos.php';
 require_once __DIR__ . '/../models/Queries/VehiculosQuery.php';
 require_once __DIR__ . '/../controllers/VehiculoController.php';
+require_once __DIR__ . '/../controllers/editar_vehiculo_proceso.php';
 
 use app\controllers\VehiculoController;
 
@@ -47,11 +48,10 @@ $vehiculos  = $controller->listar();
                 <?php if (!empty($vehiculos)): ?>
                     <?php foreach ($vehiculos as $v): ?>
                         <tr>
-                            <td><strong><?= htmlspecialchars($v->get('placa')) ?></strong></td>
                             <td><?= htmlspecialchars($v->get('marca')) ?></td>
                             <td><?= htmlspecialchars($v->get('modelo')) ?></td>
+                               <td><strong><?= htmlspecialchars($v->get('anio')) ?></strong></td>
                             <td><?= htmlspecialchars($v->get('categoria')) ?></td>
-                            <td>$<?= number_format($v->get('precio_dia'), 2) ?></td>
                             <td>
                                 <?php
                                     $estado = strtolower($v->get('estado'));

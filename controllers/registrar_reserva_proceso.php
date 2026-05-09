@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $resultado  = $controller->crear($id_cliente, $id_vehiculo, $fecha_inicio, $fecha_fin);
 
     if ($resultado) {
-        // Cambiar estado del vehículo a En Alquiler
         $vehiculoController = new VehiculoController();
         $vehiculoController->cambiarEstado($id_vehiculo, 'En Alquiler');
 

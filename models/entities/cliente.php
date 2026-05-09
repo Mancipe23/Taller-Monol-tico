@@ -8,28 +8,27 @@ require_once __DIR__ . '/../config/model_base.php';
 class cliente extends ModelBase
 {
     protected $id         = 0;
-    protected $documento  = null;
     protected $nombre     = null;
     protected $telefono   = null;
-    protected $email      = null;
+    protected $correo     = null;
+    protected $numero_licencia =null;
 
-    public function __construct($id, $documento, $nombre, $telefono, $email)
+    public function __construct($id,$nombre, $telefono, $correo, $numero_licencia)
     {
         $this->id        = $id;
-        $this->documento = $documento;
         $this->nombre    = $nombre;
         $this->telefono  = $telefono;
-        $this->email     = $email;
+        $this->correo     = $correo;
+        $this->numero_licencia =$numero_licencia;
     }
 
     public function getAllData()
     {
         return [
             'id'        => $this->id,
-            'documento' => $this->documento,
             'nombre'    => $this->nombre,
             'telefono'  => $this->telefono,
-            'email'     => $this->email,
+            'correo'     => $this->correo,
         ];
     }
 }

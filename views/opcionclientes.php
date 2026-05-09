@@ -34,10 +34,10 @@ $clientes   = $controller->getLista();
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Documento</th>
                     <th>Nombre</th>
                     <th>Teléfono</th>
-                    <th>Email</th>
+                    <th>Correo</th>
+                    <th>Numero_licencia</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -46,10 +46,10 @@ $clientes   = $controller->getLista();
                     <?php foreach ($clientes as $c): ?>
                         <tr>
                             <td><?= htmlspecialchars($c->get('id')) ?></td>
-                            <td><?= htmlspecialchars($c->get('documento')) ?></td>
                             <td><?= htmlspecialchars($c->get('nombre')) ?></td>
                             <td><?= htmlspecialchars($c->get('telefono')) ?></td>
-                            <td><?= htmlspecialchars($c->get('email')) ?></td>
+                            <td><?= htmlspecialchars($c->get('correo')) ?></td>
+                            <td><?= htmlspecialchars($c->get('numero_licencia')) ?></td>
                             <td>
                                 <a href="eliminar_cliente.php?id=<?= $c->get('id') ?>"
                                    class="btn-icon delete"
@@ -59,7 +59,7 @@ $clientes   = $controller->getLista();
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" style="text-align:center; padding:30px;">
+                        <td colspan="6">
                             No hay clientes registrados.
                         </td>
                     </tr>

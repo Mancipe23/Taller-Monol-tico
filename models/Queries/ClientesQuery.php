@@ -11,17 +11,17 @@ class ClientesQuery {
     public static function getAllClientes() {
         $list   = [];
         $connDb = new ConnectionDB();
-        $sql    = "SELECT id, documento, nombre, telefono, email FROM clientes";
+        $sql    = "SELECT id, nombre, telefono, correo, numero_licencia FROM clientes";
         $result = $connDb->execute($sql);
 
         if ($result) {
             while ($row = $result->fetch_assoc()) {
                 $cliente = new cliente(
                     $row['id'],
-                    $row['documento'],
                     $row['nombre'],
                     $row['telefono'],
-                    $row['email']
+                    $row['correo'],
+                    $row['numero_licencia']
                 );
                 array_push($list, $cliente);
             }
@@ -33,15 +33,15 @@ class ClientesQuery {
 
     public static function insertarClientes($cliente) {
         $connDb = new ConnectionDB();
-        $sql    = "INSERT INTO clientes (documento, nombre, telefono, email) 
+        $sql    = "INSERT INTO clientes (nombre, telefono, correo, numero_licencia) 
                    VALUES (?, ?, ?, ?)";
         $params = [
             'type'  => 'ssss',
             'datos' => [
-                $cliente->get('documento'),
                 $cliente->get('nombre'),
                 $cliente->get('telefono'),
-                $cliente->get('email')
+                $cliente->get('correo'),
+                $cliente->get('numero_licencia'),
             ]
         ];
 

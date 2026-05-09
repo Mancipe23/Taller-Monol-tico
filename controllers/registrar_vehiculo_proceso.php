@@ -9,23 +9,27 @@ use app\controllers\VehiculoController;
 use app\models\entities\Vehiculos;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $marca      = $_POST['marca'];
-    $placa      = $_POST['placa'];
-    $modelo     = $_POST['modelo'];
-    $categoria  = $_POST['categoria'];
-    $precio_dia = floatval($_POST['precio_dia']);
-    $estado     = 'Disponible';
-
-    $nuevoVehiculo = new Vehiculos(0, $marca, $placa, $modelo, $categoria, $estado, $precio_dia);
+    $marca     = $_POST['marca'] ?? 'Sin Marca';
+    $modelo    = $_POST['modelo'] ?? 'Sin Modelo';
+    $anio      = $_POST['anio'] ??  (2000); 
+    $categoria = $_POST['categoria'] ?? 'Sedán';
+    $estado    = 'Disponible';
+    $nuevoVehiculo = new Vehiculos(
+        0, 
+        $marca, 
+        $modelo, 
+        intval($anio), 
+        $categoria, 
+        $estado
+    );
 
     $controller = new VehiculoController();
     $resultado  = $controller->crear($nuevoVehiculo);
-
+ }
     if ($resultado) {
         header("Location: ../views/opcionvehiculo.php?res=ok");
         exit();
     } else {
-        echo "Error: No se pudo registrar el vehículo.";
-    }
+         echo "Error: No se pudo registrar el vehículo.";
 }
 ?>

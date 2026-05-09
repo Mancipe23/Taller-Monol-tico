@@ -30,7 +30,7 @@ class ReservasQuery
 
     static function createReserva($entity)
     {
-        $sql = "INSERT INTO reservas (id_cliente, id_vehiculo, fecha_inicio, fecha_fin, estado_reserva) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO reservas (cliente_id, vehiculo_id, fecha_inicio, fecha_fin, estado) VALUES (?,?,?,?,?)";
         $connDb = new ConnectionDB();
         $result = $connDb->executeUpdateData($sql, [
             "type" => "iisss",
@@ -48,7 +48,7 @@ class ReservasQuery
 
     static function actualizarEstado($id, $nuevoEstado)
     {
-        $sql = "UPDATE reservas SET estado_reserva = ? WHERE id_reserva = ?";
+        $sql = "UPDATE reservas SET estado = ? WHERE id = ?";
         $connDb = new ConnectionDB();
         $result = $connDb->executeUpdateData($sql, [
             "type" => "si", 
@@ -93,7 +93,7 @@ static function getHistorial($cliente_id = null, $vehiculo_id = null)
 
     static function ReservasActivasClientes($cliente_id)
     {
-        $sql = "SELECT COUNT(*) as total FROM reservas WHERE id_cliente = ? AND estado_reserva = 'Activa'";
+        $sql = "SELECT COUNT(*) as total FROM reservas WHERE cliente_id = ? AND estado = 'Activa'";
         $connDb = new ConnectionDB();
         $result = $connDb->executeQuery($sql, [
             'type'  => 'i',
@@ -106,7 +106,7 @@ static function getHistorial($cliente_id = null, $vehiculo_id = null)
 
     static function ReservasActivasVehiculo($vehiculo_id)
     {
-        $sql = "SELECT COUNT(*) as total FROM reservas WHERE id_vehiculo = ? AND estado_reserva = 'Activa'";
+        $sql = "SELECT COUNT(*) as total FROM reservas WHERE vehiculo_id = ? AND estado = 'Activa'";
         $connDb = new ConnectionDB();
         $result = $connDb->executeQuery($sql, [
             'type'  => 'i',
@@ -117,27 +117,34 @@ static function getHistorial($cliente_id = null, $vehiculo_id = null)
         return $row['total'] > 0;
     }
 
-    static function getReservasActivas()
-    {
-        $sql = "SELECT r.id_reserva AS id, r.id_cliente AS cliente_id, r.id_vehiculo AS vehiculo_id, 
-                       r.fecha_inicio, r.fecha_fin, r.estado_reserva AS estado, 
-                       c.nombre AS cliente_nombre, v.modelo
-                FROM reservas r
-                JOIN clientes c ON r.id_cliente = c.id_cliente
-                JOIN vehiculos v ON r.id_vehiculo = v.id_vehiculo
-                WHERE r.estado_reserva = 'Activa'";
-        
-        $connDb = new ConnectionDB();
-        $result = $connDb->execute($sql);
-        $list = [];
+   static function getReservasActivas()
+{
+    $sql = "SELECT r.id, r.cliente_id, r.vehiculo_id, 
+                   r.fecha_inicio, r.fecha_fin, r.estado, 
+                   c.nombre AS cliente_nombre, v.modelo
+            FROM reservas r
+            JOIN clientes c ON r.cliente_id = c.id
+            JOIN vehiculos v ON r.vehiculo_id = v.id
+            WHERE r.estado = 'Activa'";
+    $connDb = new ConnectionDB();
+    $result = $connDb->execute($sql);
+    $list = [];
+    if ($result) {
         while ($row = $result->fetch_assoc()) {
-            $reserva = new reservas($row['id'], $row['cliente_id'], $row['vehiculo_id'], 
-                                    $row['fecha_inicio'], $row['fecha_fin'], $row['estado']);
+            $reserva = new reservas(
+                $row['id'], 
+                $row['cliente_id'], 
+                $row['vehiculo_id'], 
+                $row['fecha_inicio'], 
+                $row['fecha_fin'], 
+                $row['estado']
+            );
             $reserva->set('cliente_nombre', $row['cliente_nombre']);
             $reserva->set('vehiculo_info',  $row['modelo']);
             $list[] = $reserva;
         }
-        $connDb->close();
-        return $list;
     }
+    $connDb->close();
+    return $list;
+}
 }

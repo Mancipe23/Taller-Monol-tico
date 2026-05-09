@@ -9,21 +9,19 @@ class Vehiculos extends ModelBase
 {
     protected $id        = 0;
     protected $marca     = null;
-    protected $placa     = null;
     protected $modelo    = null;
+    protected $anio      =0;
     protected $categoria = null;
     protected $estado    = 'Disponible';
-    protected $precio_dia = 0;
 
-    public function __construct($id, $marca, $placa, $modelo, $categoria, $estado = 'Disponible', $precio_dia = 0)
+    public function __construct($id, $marca, $modelo, $anio, $categoria, $estado = 'Disponible',)
     {
         $this->id         = $id;
         $this->marca      = $marca;
-        $this->placa      = $placa;
         $this->modelo     = $modelo;
+        $this->anio       = $anio;
         $this->categoria  = $categoria;
         $this->estado     = $estado;
-        $this->precio_dia = $precio_dia;
     }
 
     public function getAllData()
@@ -31,11 +29,10 @@ class Vehiculos extends ModelBase
         return [
             'id'         => $this->id,
             'marca'      => $this->marca,
-            'placa'      => $this->placa,
             'modelo'     => $this->modelo,
+            'anio' => $this->anio,
             'categoria'  => $this->categoria,
             'estado'     => $this->estado,
-            'precio_dia' => $this->precio_dia,
         ];
     }
 }

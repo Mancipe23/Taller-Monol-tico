@@ -9,27 +9,41 @@ require_once __DIR__ . '/../entities/Vehiculos.php';
 class VehiculosQuery
 {
     static function getAllVehiculos() {
-    // Consulta limpia basada en tu estructura real
-    $sql = "SELECT Id, placa, modelo, categoria, estado, precio_dia FROM vehiculos";
+    $sql = "SELECT id, marca,  modelo, anio, categoria, estado FROM vehiculos";
     $connDb = new ConnectionDB();
     $result = $connDb->execute($sql);
-    // ... resto de la lógica de fetch ...
+    $list = [];
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $vehiculo = new Vehiculos(
+                    $row['id'],
+                    $row['marca'],
+                    $row['modelo'],
+                    $row['anio'],
+                    $row['categoria'],
+                    $row['estado']
+                );
+                $list[] = $vehiculo;
+            }
     }
+    $connDb->close();
+
+    return $list; 
+}
 
     public static function insertarVehiculos($vehiculos)
     {
         $connDb = new ConnectionDB();
-        $sql = "INSERT INTO vehiculos (marca, placa, modelo, categoria, estado, precio_dia) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO vehiculos (marca, modelo, anio, categoria, estado) 
+                VALUES (?, ?, ?, ?,?)";
         $params = [
-            'type'  => 'sssssd',
+            'type'  => 'ssiss',
             'datos' => [
                 $vehiculos->get('marca'),
-                $vehiculos->get('placa'),
                 $vehiculos->get('modelo'),
+                $vehiculos->get('anio'),
                 $vehiculos->get('categoria'),
                 $vehiculos->get('estado'),
-                $vehiculos->get('precio_dia')
             ]
         ];
 
@@ -52,7 +66,7 @@ class VehiculosQuery
 
     static function getDisponibles()
     {
-        $sql = "SELECT id, marca, placa, modelo, categoria, estado, precio_dia 
+        $sql = "SELECT id, marca, modelo, anio, categoria, estado
                 FROM vehiculos WHERE estado = 'Disponible'";
         $connDb = new ConnectionDB();
         $result = $connDb->execute($sql);
@@ -63,11 +77,10 @@ class VehiculosQuery
                 $vehiculo = new Vehiculos(
                     $row['id'],
                     $row['marca'],
-                    $row['placa'],
                     $row['modelo'],
+                    $row['anio'],
                     $row['categoria'],
                     $row['estado'],
-                    $row['precio_dia']
                 );
                 $list[] = $vehiculo;
             }
@@ -89,13 +102,13 @@ class VehiculosQuery
         return $result;
     }
 
-    public static function actualizarVehiculo($id, $placa, $marca, $modelo, $categoria, $precio_dia, $estado)
+    public static function actualizarVehiculo($id, $marca, $modelo, $anio, $categoria,  $estado)
     {
     $connDb = new ConnectionDB();
-    $sql    = "UPDATE vehiculos SET placa=?, marca=?, modelo=?, categoria=?, precio_dia=?, estado=? WHERE id=?";
+    $sql    = "UPDATE vehiculos SET marca=?, modelo=?, anio=? categoria=?,  estado=? WHERE id=?";
     $result = $connDb->executeUpdateData($sql, [
-        'type'  => 'ssssdsi',
-        'datos' => [$placa, $marca, $modelo, $categoria, $precio_dia, $estado, $id]
+        'type'  => 'ssissi',
+        'datos' => [$marca, $modelo, $anio, $categoria,$estado, $id]
     ]);
     $connDb->close();
     return $result;

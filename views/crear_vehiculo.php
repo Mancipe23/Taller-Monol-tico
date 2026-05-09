@@ -25,16 +25,16 @@
                 <input type="text" name="marca" class="filter-input" placeholder="Ej: Toyota" required>
             </div>
 
-            <div class="filter-group full-width">
-                <label>Placa</label>
-                <input type="text" name="placa" class="filter-input" placeholder="Ej: ABC-123" required>
-            </div>
 
             <div class="filter-group full-width">
                 <label>Modelo / Línea</label>
                 <input type="text" name="modelo" class="filter-input" placeholder="Ej: Corolla" required>
             </div>
-
+            
+            <div class="filter-group full-width">
+                <label>año</label>
+                <input type="number" name="anio" class="filter-input" placeholder="Ej: 2014" required>
+            </div>
             <div class="filter-group full-width">
                 <label>Categoría</label>
                 <select name="categoria" class="filter-input">
@@ -45,10 +45,6 @@
                 </select>
             </div>
 
-            <div class="filter-group full-width">
-                <label>Precio por Día ($)</label>
-                <input type="number" name="precio_dia" class="filter-input" placeholder="Ej: 150000" step="0.01" min="0" required>
-            </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn-add">➕ Guardar Vehículo</button>
