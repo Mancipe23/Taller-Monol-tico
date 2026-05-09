@@ -68,7 +68,6 @@ $reservas = $controller->historial($cliente_id, $vehiculo_id);
                     <?php foreach ($reservas as $r): ?>
                         <?php 
                             $estado = strtolower($r->get('estado')); 
-                            // Aplicación de las clases de colores según el estado
                             $tagClass = ($estado == 'activa' || $estado == 'completada') ? 'available' : (($estado == 'cancelada') ? 'cancelled' : 'rented');
                         ?>
                         <tr>

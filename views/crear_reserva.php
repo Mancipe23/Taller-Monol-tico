@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../models/config/model_base.php';
 require __DIR__ . '/../models/entities/Vehiculos.php';
-require __DIR__ . '/../models/entities/Clientes.php';
+require __DIR__ . '/../models/entities/cliente.php';
 require __DIR__ . '/../models/config/connection_db.php';
 require __DIR__ . '/../models/queries/VehiculosQuery.php';
 require __DIR__ . '/../models/queries/ClientesQuery.php';
