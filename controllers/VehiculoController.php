@@ -5,15 +5,20 @@ use app\models\entities\Vehiculos;
 use app\models\Queries\VehiculosQuery;
 
 class VehiculoController {
-     public function getLista()
-    {
+
+    public function listar() {
         return VehiculosQuery::getAllVehiculos();
     }
 
-public function disponibles() {
+    public function getLista() {
+        return VehiculosQuery::getAllVehiculos();
+    }
+
+    public function disponibles() {
         return VehiculosQuery::getDisponibles();
     }
-     public function crear($vehiculo) {
+
+    public function crear($vehiculo) {
         return VehiculosQuery::insertarVehiculos($vehiculo);
     }
 
@@ -21,8 +26,7 @@ public function disponibles() {
         return VehiculosQuery::eliminarVehiculos($id);
     }
 
-    public function cambiarEstado($id, $estado)
-    {
+    public function cambiarEstado($id, $estado) {
         return VehiculosQuery::actualizarEstado($id, $estado);
     }
 }
