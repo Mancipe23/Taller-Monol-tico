@@ -1,51 +1,117 @@
+<?php
+
+require __DIR__ . '/../models/config/model_base.php';
+require __DIR__ . '/../models/entities/cliente.php';
+require __DIR__ . '/../models/config/connection_db.php';
+require __DIR__ . '/../models/queries/ClientesQuery.php';
+require __DIR__ . '/../controllers/ClienteController.php';
+
+use app\controllers\ClienteController;
+
+$controller = new ClienteController();
+
+$clientes = $controller->getLista();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentCar Pro - Clientes</title>
+    <title>Clientes</title>
     <link rel="stylesheet" href="../public/style.css">
 </head>
+
 <body class="fade-in">
 
-    <div class="container">
-        <header>
-            <h1>Gestión de Clientes</h1>
-            <p class="subtitle">Administra la base de datos de conductores registrados</p>
-        </header>
+<div class="container">
 
-        <div class="action-bar">
-            <a href="inicio.php" class="btn-back">← Volver</a>
-            <button class="btn-add">Registrar Cliente</button>
-        </div>
+    <h1>Gestión de Clientes</h1>
 
-        <div class="table-responsive">
-            <table class="main-table">
-                <thead>
-                    <tr>
-                        <th>Cédula / ID</th>
-                        <th>Nombre Completo</th>
-                        <th>Teléfono</th>
-                        <th>Correo Electrónico</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Datos de ejemplo -->
-                    <tr>
-                        <td>1002345678</td>
-                        <td>Juan Pérez</td>
-                        <td>310 123 4567</td>
-                        <td>juan.perez@email.com</td>
-                        <td>
-                            <button class="btn-icon">✏️</button>
-                            <button class="btn-icon delete">🗑️</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <p class="subtitle">
+        Administra los clientes registrados
+    </p>
+
+    <div class="action-bar">
+
+        <a href="inicio.php" class="btn-back">
+            ← Volver
+        </a>
+
+        <a href="registrar_cliente.php" class="btn-add">
+            ➕ Registrar Cliente
+        </a>
+
     </div>
+
+    <div class="table-responsive">
+
+        <table class="main-table">
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Licencia</th>
+                    <th>Acciones</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            <?php if ($clientes): ?>
+
+                <?php foreach ($clientes as $c): ?>
+
+                    <tr>
+
+                        <td><?= $c->get('id') ?></td>
+
+                        <td><?= $c->get('nombre') ?></td>
+
+                        <td><?= $c->get('telefono') ?></td>
+
+                        <td><?= $c->get('correo') ?></td>
+
+                        <td><?= $c->get('numero_licencia') ?></td>
+
+                        <td>
+
+                            <a
+                                href="eliminar_cliente.php?id=<?= $c->get('id') ?>"
+                                class="btn-icon delete"
+                            >
+                                🗑️
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php else: ?>
+
+                <tr>
+                    <td colspan="6">
+                        No hay clientes registrados
+                    </td>
+                </tr>
+
+            <?php endif; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 
 </body>
 </html>
