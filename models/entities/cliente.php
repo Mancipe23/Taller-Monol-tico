@@ -29,6 +29,7 @@ class cliente extends ModelBase
             'nombre'    => $this->nombre,
             'telefono'  => $this->telefono,
             'correo'     => $this->correo,
+            'numero_licencia' => $this->numero_licencia, 
         ];
     }
 }

@@ -8,28 +8,20 @@ require __DIR__ . '/../controllers/ReservasController.php';
 
 use app\controllers\ReservasController;
 
-$controller = new ReservasController();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $controller = new ReservasController();
 
-$resultado = $controller->crear(
-    $_POST['cliente_id'],
-    $_POST['vehiculo_id'],
-    $_POST['fecha_inicio'],
-    $_POST['fecha_fin']
-);
-?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datos guardados</title>
-</head>
-<body> 
-    <?php
-echo $resultado['success'] ?? $resultado['error'];
-
-echo "<br><a href='lista_reservas.php'>Volver</a>";
-?>
-<a href='lista_reservas.php'>Volver</a>";
-</body> 
-</html>
+    $resultado = $controller->crear(
+        $_POST['cliente_id'],
+        $_POST['vehiculo_id'],
+        $_POST['fecha_inicio'],
+        $_POST['fecha_fin']
+    );
+    if (isset($resultado['success'])) {
+        header("Location: lista_reservas.php?res=ok");
+        exit();
+    } else {
+        header("Location: crear_reserva.php?error=" . urlencode($resultado['error']));
+        exit();
+    }
+}
