@@ -1,7 +1,5 @@
-/* =========================================
-   1. CONFIGURACIÓN, FUENTES Y TÍTULOS 
-   ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Poppins:wght@400;600&display=swap');
+
+
 
 * {
     margin: 0;
@@ -38,9 +36,7 @@ h1 {
     font-size: 1.1rem;
 }
 
-/* =========================================
-   2. DISEÑO DE CUADRÍCULA Y TARJETAS (Inicio) 
-   ========================================= */
+
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -82,9 +78,7 @@ h1 {
     color: #1a2a6c;
 }
 
-/* =========================================
-   3. ANIMACIONES 
-   ========================================= */
+
 .fade-in {
     animation: fadeIn 1s ease-in;
 }
@@ -94,9 +88,7 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* =========================================
-   4. CONTENEDORES Y BOTONES DE ACCIÓN 
-   ========================================= */
+
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -138,9 +130,6 @@ h1 {
     transform: translateY(-2px);
 }
 
-/* =========================================
-   5. FORMULARIOS DE FILTRO Y BÚSQUEDA 
-   ========================================= */
 .filter-form {
     background: white;
     padding: 20px;
@@ -206,9 +195,7 @@ h1 {
     margin-top: 10px;
 }
 
-/* =========================================
-   6. TABLAS RESPONSIVAS 
-   ========================================= */
+
 .table-responsive {
     background: white;
     border-radius: 15px;
@@ -245,9 +232,7 @@ h1 {
     background-color: #fcfcfc;
 }
 
-/* =========================================
-   7. ETIQUETAS DE ESTADO Y BOTONES DE ACCIÓN 
-   ========================================= */
+
 .tag {
     padding: 6px 14px;
     border-radius: 20px;
@@ -286,9 +271,6 @@ h1 {
     border-color: #ffb1b1; 
 }
 
-/* =========================================
-   8. MODAL DE EDICIÓN
-   ========================================= */
 .modal-overlay {
     display: none;
     position: fixed;

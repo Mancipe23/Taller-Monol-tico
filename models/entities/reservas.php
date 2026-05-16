@@ -12,6 +12,7 @@ class Reservas extends ModelBase
     protected $fecha_inicio = null;
     protected $fecha_fin = null;
     protected $estado = null;
+    
     public function __construct($id, $cliente_id, $vehiculo_id, $fecha_inicio, $fecha_fin, $estado)
     {
         $this->id = $id;

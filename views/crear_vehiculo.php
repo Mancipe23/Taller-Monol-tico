@@ -18,13 +18,12 @@
     </div>
 
     <div class="table-responsive">
-        <form action="../controllers/registrar_vehiculo_proceso.php" method="POST" class="filter-form">
+        <form action="guardar_vehiculo.php" method="POST" class="filter-form">
 
             <div class="filter-group full-width">
                 <label>Marca del Vehículo</label>
                 <input type="text" name="marca" class="filter-input" placeholder="Ej: Toyota" required>
             </div>
-
 
             <div class="filter-group full-width">
                 <label>Modelo / Línea</label>
@@ -32,9 +31,10 @@
             </div>
             
             <div class="filter-group full-width">
-                <label>año</label>
+                <label>Año</label>
                 <input type="number" name="anio" class="filter-input" placeholder="Ej: 2014" required>
             </div>
+
             <div class="filter-group full-width">
                 <label>Categoría</label>
                 <select name="categoria" class="filter-input">
@@ -44,7 +44,6 @@
                     <option value="Deportivo">Deportivo</option>
                 </select>
             </div>
-
 
             <div class="form-actions">
                 <button type="submit" class="btn-add">➕ Guardar Vehículo</button>
